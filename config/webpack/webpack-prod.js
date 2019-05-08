@@ -13,6 +13,6 @@ const prodConfig = {
   },
 };
 
-baseConfig.output.filename = baseConfig.output.filename.replace('.js', '.min.js');
+baseConfig.forEach((config) => config.output.filename = config.output.filename.replace('.js', '.min.js'));
 
 module.exports = merge(baseConfig, prodConfig);

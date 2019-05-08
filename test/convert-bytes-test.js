@@ -1,13 +1,12 @@
-import { expect } from 'chai';
-import { convertBytes, convertBytesPromise } from '../src/convert-bytes.js';
-import { characterSets } from '../src/character-sets.js';
+// import { expect } from 'chai';
+// import { convertBytes, convertBytesPromise } from '../src/convert-bytes.js';
+// import { characterSets } from '../src/character-sets.js';
 
-/* Use these instead of the above imports for testing in node.js:
+// Use these instead of the above imports for testing in node.js:
 var expect = require('chai').expect;
-var convertBytes =  require('../dist/dicom-character-set.js').convertBytes;
-var convertBytesPromise =  require('../dist/dicom-character-set.js').convertBytesPromise;
-var characterSets = require('../dist/dicom-character-set.js').characterSets;
-*/
+var convertBytes =  require('../dist/node/dicom-character-set.js').convertBytes;
+var convertBytesPromise =  require('../dist/node/dicom-character-set.js').convertBytesPromise;
+var characterSets = require('../dist/node/dicom-character-set.js').characterSets;
 
 const examples = {
     // Single byte (with/without extensions)

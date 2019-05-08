@@ -15,4 +15,5 @@ const prodConfig = {
 
 baseConfig.forEach((config) => config.output.filename = config.output.filename.replace('.js', '.min.js'));
 
-module.exports = merge(baseConfig, prodConfig);
+module.exports = baseConfig.map((config) => merge(config, prodConfig));
+

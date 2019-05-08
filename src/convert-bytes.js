@@ -24,12 +24,6 @@ function appendRunWithoutPromise (output, byteRunCharacterSet, bytes, byteRunSta
   return output + convertWithoutExtensions(byteRunCharacterSet.encoding, oneRunBytes);
 }
 
-function appendRunWithPromise (output, byteRunCharacterSet, bytes, byteRunStart, byteRunEnd) {
-  const oneRunBytes = preprocessBytes(byteRunCharacterSet, bytes, byteRunStart, byteRunEnd);
-
-  return (output === '' ? Promise.resolve('') : output).then((lhs) => convertWithoutExtensionsPromise(byteRunCharacterSet.encoding, oneRunBytes).then((rhs) => lhs + rhs));
-}
-
 function checkParameters (specificCharacterSet, bytes) {
   if (bytes && !(bytes instanceof Uint8Array)) {
     throw new Error('bytes must be a Uint8Array');
@@ -108,22 +102,6 @@ function convertWithoutExtensions (encoding, bytes) {
 
 
   return (encoding === 'shift-jis') ? adjustShiftJISResult(retVal) : retVal;
-}
-
-function convertWithoutExtensionsPromise (encoding, bytes) {
-  return new Promise((resolve) => {
-    const fileReader = new FileReader();
-
-    if (encoding === 'shift-jis') {
-      fileReader.onload = () => resolve(adjustShiftJISResult(fileReader.result));
-    } else {
-      fileReader.onload = () => resolve(fileReader.result);
-    }
-
-    const blob = new Blob([bytes]);
-
-    fileReader.readAsText(blob, encoding);
-  });
 }
 
 // Multibyte non-extension character sets must stand on their own or else be ignored. This method enforces that.
@@ -228,8 +206,7 @@ function preprocessBytes (characterSet, bytes, byteStart, byteEnd) {
   if (characterSet.isJISX0212) {
     oneEncodingBytes = processJISX0212(bytes, byteStart, byteEnd);
   } else {
-    oneEncodingBytes = new Uint8Array(byteEnd - byteStart);
-    oneEncodingBytes.set(new Uint8Array(bytes.buffer, byteStart, byteEnd - byteStart));
+    oneEncodingBytes = bytes.slice(byteStart, byteEnd);
     if (characterSet.setHighBit) {
       setHighBit(oneEncodingBytes);
     }
@@ -293,8 +270,4 @@ function setHighBit (bytes) {
 
 export function convertBytes (specificCharacterSet, bytes, options) {
   return convertBytesCore(convertWithoutExtensions, appendRunWithoutPromise, specificCharacterSet, bytes, options);
-}
-
-export function convertBytesPromise (specificCharacterSet, bytes, options) {
-  return convertBytesCore(convertWithoutExtensionsPromise, appendRunWithPromise, specificCharacterSet, bytes, options);
 }

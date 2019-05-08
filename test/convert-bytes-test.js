@@ -1,11 +1,5 @@
-// import { expect } from 'chai';
-// import { convertBytes, convertBytesPromise } from '../src/convert-bytes.js';
-// import { characterSets } from '../src/character-sets.js';
-
-// Use these instead of the above imports for testing in node.js:
 var expect = require('chai').expect;
 var convertBytes =  require('../dist/node/dicom-character-set.js').convertBytes;
-var convertBytesPromise =  require('../dist/node/dicom-character-set.js').convertBytesPromise;
 var characterSets = require('../dist/node/dicom-character-set.js').characterSets;
 
 const examples = {
@@ -147,15 +141,6 @@ describe('convertBytes', () => {
         testSingleCharacterSet('GBK');
       });
 
-      it('should properly convert GBK with promises', () => {
-        // Arrange
-        const example = examples['GBK'];
-
-        // Act
-        return convertBytesPromise('GBK', new Uint8Array(example.bytes)).then(returnValue => {
-          expect(returnValue).to.equal(example.value);
-        });
-      });
   });
 
   describe('single byte with extensions', () => {
@@ -243,17 +228,6 @@ describe('convertBytes', () => {
       // Assert
       expect(returnValue).to.equal(expectedValue);
     });
-
-    it('should properly convert to ISO 2022 IR 13 with promises', () => {
-        // Arrange
-        const bytes = examples['IR 6'].bytes.concat(characterSets['ISO 2022 IR 13'].elements[0].escapeSequence).concat(examples['IR 13'].bytes);
-        const expectedValue = examples['IR 6'].value + examples['IR 13'].value;
-
-        // Act
-        return convertBytesPromise('ISO 2022 IR 6\\ISO 2022 IR 13', new Uint8Array(bytes), {vr: 'LT'}).then(returnValue => {
-          expect(returnValue).to.equal(expectedValue);
-        });
-      });
   });
 
   describe('robustness', () => {

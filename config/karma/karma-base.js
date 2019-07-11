@@ -1,5 +1,5 @@
 const path = require('path');
-const webpackConfig = require('../webpack');
+const webpackConfig = require('../webpack')[0];
 
 /* eslint no-process-env:0 */
 process.env.CHROME_BIN = require('puppeteer').executablePath();

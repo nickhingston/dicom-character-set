@@ -34,7 +34,7 @@
     "test:all": "npm run test:chrome && npm run test:firefox",
     "test:chrome": "karma start config/karma/karma-chrome.js",
     "test:firefox": "karma start config/karma/karma-firefox.js",
-    "test:node": "./node_modules/.bin/mocha --reporter spec",
+    "test:node": "env NODE_ICU_DATA=node_modules/full-icu ./node_modules/.bin/mocha --reporter spec",
     "test:watch": "karma start config/karma/karma-watch.js",
     "version": "node -p -e \"'export default \\'' + require('./package.json').version + '\\';'\" > src/version.js",
     "watch": "npm run webpack:watch",
@@ -50,6 +50,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
+    "full-icu": "^1.2.1",
     "chai": "^4.1.2",
     "coveralls": "^3.0.0",
     "eslint": "^4.10.0",
@@ -70,7 +71,7 @@
     "rusha": "^0.8.6",
     "shx": "^0.2.2",
     "uglifyjs-webpack-plugin": "^1.2.4",
-    "webpack": "^4.4.1",
-    "webpack-cli": "^2.0.13"
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.2"
   }
 }

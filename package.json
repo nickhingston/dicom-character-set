@@ -1,5 +1,5 @@
 {
-  "name": "dicom-character-set",
+  "name": "@wearemothership/dicom-character-set-ii",
   "version": "1.0.4",
   "description": "Converts bytes of encoded DICOM text to Javascript DOMString",
   "main": "dist/dicom-character-set.min.js",
@@ -11,6 +11,10 @@
   "files": [
     "dist/*.min.js*"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
   "keywords": [
     "DICOM",
     "medical",

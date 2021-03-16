@@ -101,11 +101,23 @@ function convertWithExtensions (allowedCharacterSets, bytes, delimiters, appendR
   return output;
 }
 
+const decoders = {};
+
 function convertWithoutExtensions (encoding, bytes) {
-  const retVal = new TextDecoder(encoding).decode(bytes);
+  let decoder = decoders[encoding];
 
+  if (!decoder) {
+    decoder = new TextDecoder(encoding);
+    if (encoding === 'shift-jis') {
+      decoder = {
+        textDecoder: decoder,
+        decode: (b) => adjustShiftJISResult(decoder.decode(b))
+      };
+    }
+    decoders[encoding] = decoder;
+  }
 
-  return (encoding === 'shift-jis') ? adjustShiftJISResult(retVal) : retVal;
+  return decoder.decode(bytes);
 }
 
 function convertWithoutExtensionsPromise (encoding, bytes) {

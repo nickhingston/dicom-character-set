@@ -1,5 +1,5 @@
 {
-  "name": "@wearemothership/dicom-character-set-ii",
+  "name": "@wearemothership/dicom-character-set",
   "version": "1.0.4-opt.1",
   "description": "Converts bytes of encoded DICOM text to Javascript DOMString",
   "main": "dist/dicom-character-set.min.js",
